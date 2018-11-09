@@ -11,14 +11,19 @@ const getYells = function () {
     return yells[Math.floor(Math.random() * yells.length)];
 }
 
-slack.on('/snorri', function (event) {
+slack.on('/snorri', 'food', function (event) {
     const response_url = event.response_url;
     slack.send(response_url, {
         text: getYells()
     })
 });
 
-slack.on('/snorri', message => { })
+slack.on('sleepies', function (event) {
+    const response_url = event.response_url;
+    slack.send(response_url, {
+        text: 'wowwwww'
+    })
+});
 
 slack.on('*', event => { console.log(event) });
 
