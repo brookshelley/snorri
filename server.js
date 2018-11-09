@@ -4,7 +4,7 @@ const express = require('express');
 
 const app = express();
 
-var text='';
+var text;
 
 const slack = tinyspeck.instance({
     token: process.env.SLACK_ACCESS_TOKEN
@@ -17,23 +17,17 @@ const getYells = function () {
 }
 
 slack.on('/snorri', function (event) {
-    if (text == 'food') {  
+  if (event.text == 'food') {  
     const response_url = event.response_url;
     slack.send(response_url, {
         text: getYells()
     })
   }
-});
-
-app.post('/command', (req, res) => {
-  // extract the slash command text, and trigger ID from payload
-  const { text } = req.body;
-  
-if (text == 'food') { 
-  const response_url = event.response_url;
-  slack.send(response_url, {
-        text: 'yes, please'
-    })  
+  else {
+    const response_url = event.response_url;
+    slack.send(response_url, {
+        text: '_stares at you_'
+    })
   }
 });
 
