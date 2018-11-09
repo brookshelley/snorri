@@ -1,5 +1,6 @@
 // server.js
 const tinyspeck = require('tinyspeck');
+var text='';
 
 const slack = tinyspeck.instance({
     token: process.env.SLACK_ACCESS_TOKEN
@@ -18,10 +19,10 @@ slack.on('/snorri', function (event) {
     })
 });
 
-slack.on('food', function (event) {
+slack.on('/snorri', message => {'food'}, function (event) {
     const response_url = event.response_url;
     slack.send(response_url, {
-        text: getYells()
+        text: 'nope'
     })
 });
 
