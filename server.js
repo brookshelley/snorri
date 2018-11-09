@@ -4,6 +4,8 @@ const express = require('express');
 
 const app = express();
 
+var text='';
+
 const slack = tinyspeck.instance({
     token: process.env.SLACK_ACCESS_TOKEN
 });
@@ -14,22 +16,24 @@ const getYells = function () {
     return yells[Math.floor(Math.random() * yells.length)];
 }
 
-slack.on('/snorri', message => {}, function (event) {
+slack.on('/snorri', function (event) {
+    if (text == 'food') {  
     const response_url = event.response_url;
     slack.send(response_url, {
-        funct
+        text: getYells()
     })
+  }
 });
 
 app.post('/command', (req, res) => {
   // extract the slash command text, and trigger ID from payload
   const { text } = req.body;
   
-  if (req.body=='food') {
+if (text == 'food') { 
   const response_url = event.response_url;
   slack.send(response_url, {
         text: 'yes, please'
-    })
+    })  
   }
 });
 
