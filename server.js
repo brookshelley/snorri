@@ -18,6 +18,8 @@ slack.on('/snorri', function (event) {
     })
 });
 
+slack.on('/snorri', message => { })
+
 slack.on('*', event => { console.log(event) });
 
 slack.listen(process.env.PORT, process.env.SLACK_ACCESS_TOKEN);
