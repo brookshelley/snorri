@@ -3,7 +3,7 @@ const tinyspeck = require('tinyspeck');
 
 const slack = tinyspeck.instance({
     token: process.env.BOT_TOKEN
-});
+});  
 
 const greetings = ['Hello!', 'Hi there!', 'Bonjour!',
     'Saluton!', '여보세요', '¡Hola!'];
