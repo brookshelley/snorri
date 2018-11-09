@@ -17,15 +17,20 @@ const getYells = function () {
 slack.on('/snorri', message => {}, function (event) {
     const response_url = event.response_url;
     slack.send(response_url, {
-        text: 'nope'
+        funct
     })
 });
 
 app.post('/command', (req, res) => {
   // extract the slash command text, and trigger ID from payload
-  const { text, trigger_id } = req.body;
+  const { text } = req.body;
   
-  if req.body = 'food';
+  if (req.body=='food') {
+  const response_url = event.response_url;
+  slack.send(response_url, {
+        text: 'yes, please'
+    })
+  }
 });
 
 slack.on('*', event => { console.log(event) });
