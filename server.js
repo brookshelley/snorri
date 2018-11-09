@@ -25,6 +25,16 @@ slack.on('sleepies', function (event) {
     })
 });
 
+slack.on('message', message => {
+  const response = messages.handleMessage(message.event.text);
+  if (response) {
+    slack.send({
+      text: response,
+      channel: message.event.channel
+    })
+  }
+});
+
 slack.on('*', event => { console.log(event) });
 
 slack.listen(process.env.PORT, process.env.SLACK_ACCESS_TOKEN);
