@@ -2,16 +2,16 @@
 const tinyspeck = require('tinyspeck');
 
 const slack = tinyspeck.instance({
-    token: process.env.BOT_TOKEN
+    token: process.env.SLACK_ACCESS_TOKEN
 });
 
-const yells = ['mreowww', 'wuoooahh', 'broo?'];
+const yells = ['mreowww', 'wuoooahh', 'broo?', 'wooah', 'mwow?'];
 
 const getYells = function () {
     return yells[Math.floor(Math.random() * yells.length)];
 }
 
-slack.on('/food', function (event) {
+slack.on('/snorri', function (event) {
     const response_url = event.response_url;
     slack.send(response_url, {
         text: getYells()
