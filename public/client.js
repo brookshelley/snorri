@@ -5,9 +5,9 @@ console.log('hello world :o');
 
 // our default array of dreams
 const dreams = [
-  'Find and count some sheep',
-  'Climb a really tall mountain',
-  'Wash the dishes'
+  'mreowww',
+  'wuoooahh',
+  'broo?'
 ];
 
 // define variables that reference elements on our page

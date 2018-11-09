@@ -1,22 +1,24 @@
 // server.js
-// where your node app starts
+const tinyspeck = require('tinyspeck');
 
-// init project
-const express = require('express');
-const app = express();
-
-// we've started you off with Express, 
-// but feel free to use whatever libs or frameworks you'd like through `package.json`.
-
-// http://expressjs.com/en/starter/static-files.html
-app.use(express.static('public'));
-
-// http://expressjs.com/en/starter/basic-routing.html
-app.get('/', function(request, response) {
-  response.sendFile(__dirname + '/views/index.html');
+const slack = tinyspeck.instance({
+    token: process.env.BOT_TOKEN
 });
 
-// listen for requests :)
-const listener = app.listen(process.env.PORT, function() {
-  console.log('Your app is listening on port ' + listener.address().port);
+const greetings = ['Hello!', 'Hi there!', 'Bonjour!',
+    'Saluton!', '여보세요', '¡Hola!'];
+
+const getGreeting = function () {
+    return greetings[Math.floor(Math.random() * greetings.length)];
+}
+
+slack.on('/hello', function (event) {
+    const response_url = event.response_url;
+    slack.send(response_url, {
+        text: getGreeting()
+    })
 });
+
+slack.on('*', event => { console.log(event) });
+
+slack.listen(process.env.PORT, process.env.VERIFICATION_TOKEN);
