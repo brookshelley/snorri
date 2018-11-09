@@ -1,6 +1,8 @@
 // server.js
 const tinyspeck = require('tinyspeck');
-var text='';
+const express = require('express');
+
+const app = express();
 
 const slack = tinyspeck.instance({
     token: process.env.SLACK_ACCESS_TOKEN
@@ -12,18 +14,18 @@ const getYells = function () {
     return yells[Math.floor(Math.random() * yells.length)];
 }
 
-slack.on('/snorri', function (event) {
-    const response_url = event.response_url;
-    slack.send(response_url, {
-        text: getYells()
-    })
-});
-
-slack.on('/snorri', message => {'food'}, function (event) {
+slack.on('/snorri', message => {}, function (event) {
     const response_url = event.response_url;
     slack.send(response_url, {
         text: 'nope'
     })
+});
+
+app.post('/command', (req, res) => {
+  // extract the slash command text, and trigger ID from payload
+  const { text, trigger_id } = req.body;
+  
+  if req.body = 'food';
 });
 
 slack.on('*', event => { console.log(event) });
