@@ -21,9 +21,12 @@ slack.on('/snorri', function (event) {
         text: getYells()
     })
   }
-  else if (event.text == '
-    
-  )
+  else if (event.text == 'sleepies') {
+    const response_url = event.response_url;
+    slack.send(response_url, {
+        text: '_blinks_'
+    })
+  }
   else {
     const response_url = event.response_url;
     slack.send(response_url, {
