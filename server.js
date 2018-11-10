@@ -4,8 +4,6 @@ const express = require('express');
 
 const app = express();
 
-var text;
-
 const slack = tinyspeck.instance({
     token: process.env.SLACK_ACCESS_TOKEN
 });
@@ -23,6 +21,9 @@ slack.on('/snorri', function (event) {
         text: getYells()
     })
   }
+  else if (event.text == '
+    
+  )
   else {
     const response_url = event.response_url;
     slack.send(response_url, {
