@@ -11,7 +11,7 @@ module.exports = {
 // https://api.slack.com/methods/oauth.access
 function oauth(code, uri) {
   return post({
-    url: 'https://slack.com/api/oauth.access',
+    url: 'https://slack.com/oauth/authorize',
     transform: JSON.parse,
     form: {
       client_id: process.env.SLACK_CLIENT_ID,
