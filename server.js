@@ -43,7 +43,7 @@ slack.on('*', event => { console.log(event) });
 slack.listen(process.env.PORT, process.env.SLACK_ACCESS_TOKEN)
 
 app.get('/auth', (req, res) =>{
-    res.sendFile(__dirname + '/add_to_slack.html')
+    res.sendFile(__dirname + '../public/add_to_slack.html')
 })
 
 app.get('/auth/redirect', (req, res) =>{
