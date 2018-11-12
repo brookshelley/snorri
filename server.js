@@ -2,6 +2,7 @@
 const tinyspeck = require('tinyspeck');
 const express = require('express');
 const request = require('request');
+require('dotenv').config() 
 
 const app = express();
 

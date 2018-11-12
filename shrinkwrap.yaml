@@ -1,4 +1,5 @@
 dependencies:
+  dotenv: 6.1.0
   express: 4.16.3
   request: 2.88.0
   tinyspeck: 1.4.2
@@ -158,6 +159,12 @@ packages:
     dev: false
     resolution:
       integrity: sha1-l4hXRCxEdJ5CBmE+N5RiBYJqvYA=
+  /dotenv/6.1.0:
+    dev: false
+    engines:
+      node: '>=6'
+    resolution:
+      integrity: sha512-/veDn2ztgRlB7gKmE3i9f6CmDIyXAy6d5nBq+whO9SLX+Zs1sXEgFLPi+aSuWqUuusMfbi84fT8j34fs1HaYUw==
   /ecc-jsbn/0.1.2:
     dependencies:
       jsbn: 0.1.1
@@ -731,6 +738,7 @@ registry: 'https://registry.npmjs.org/'
 shrinkwrapMinorVersion: 9
 shrinkwrapVersion: 3
 specifiers:
+  dotenv: ^6.1.0
   express: ^4.16.3
   request: ^2.88.0
   tinyspeck: ^1.4.2
