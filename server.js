@@ -41,3 +41,28 @@ slack.on('/snorri', function (event) {
 slack.on('*', event => { console.log(event) });
 
 slack.listen(process.env.PORT, process.env.SLACK_ACCESS_TOKEN)
+
+app.get('/auth', (req, res) =>{
+    res.sendFile(__dirname + '/add_to_slack.html')
+})
+
+app.get('/auth/redirect', (req, res) =>{
+    var options = {
+        uri: 'https://slack.com/oauth/authorize'
+            +req.query.code+
+            '&client_id='+process.env.CLIENT_ID+
+            '&client_secret='+process.env.CLIENT_SECRET+
+            '&redirect_uri='+process.env.REDIRECT_URI,
+        method: 'GET'
+    }
+    request(options, (error, response, body) => {
+        var JSONresponse = JSON.parse(body)
+        if (!JSONresponse.ok){
+            console.log(JSONresponse)
+            res.send("Error encountered: \n"+JSON.stringify(JSONresponse)).status(200).end()
+        }else{
+            console.log(JSONresponse)
+            res.send("Success!")
+        }
+    })
+}) 
