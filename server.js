@@ -3,11 +3,11 @@ const tinyspeck = require('tinyspeck');
 const express = require('express');
 const request = require('request');
 require('dotenv').config();
-const dispatcher = require('httpdispatcher');
-const http = require('http');
+var dispatcher = require('httpdispatcher');
+var dispatcher = new dispatcher();
+var http = require('http');
 const EventEmitter = require('events');
 const app = express();
-var dispatcher = new HttpDispatcher();
 const slack = tinyspeck.instance({
     token: process.env.SLACK_ACCESS_TOKEN
 });
@@ -44,7 +44,45 @@ slack.on('/snorri', function (event) {
 
 slack.on('*', event => { console.log(event) });
 
-slack.listen(process.env.PORT, process.env.SLACK_ACCESS_TOKEN)
+slack.listen(process.env.PORT, process.env.SLACK_ACCESS_TOKEN, 
+             dispatcher.onGet("/auth/grant", function(req, res) {
+      if(req.params.code){
+        res.writeHead(200, {'Content-Type': 'text/html'});
+        let html = '<p>Success! Authed ok</p>';
+        res.end(html);
+      } else {
+        res.writeHead(200, {'Content-Type': 'text/html'});
+        let html = '<p>Failed! Something went wrong when authing, check the logs</p>';
+        res.end(html);    
+      }
+}
+    )
+return http.createServer((req, res) => {
+      let data = '';
+      
+      req.on('data', chunk => data += chunk);
+      
+      req.on('end', () => {
+        let message = this.parse(data);
+
+        // notify upon request
+        this.emit(req.url, message); 
+
+        // new subscription challenge
+        if (message.challenge){ console.log("verifying event subscription!"); res.end(message.challenge); return exit(); }
+        
+        // digest the incoming message
+        if (!token || token === message.token) this.digest(message);
+        
+        // close response
+        res.end();
+      });
+
+      dispatcher.dispatch(req, res);
+
+    }).listen(port, '0.0.0.0', () => {
+      console.log(`listening for events on port ${port}`);
+    });
              
 app.get('/auth', (req, res) =>{
     res.sendFile(__dirname + '/add_to_slack.html')
