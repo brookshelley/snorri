@@ -2,7 +2,7 @@
 const tinyspeck = require('tinyspeck');
 const express = require('express');
 const request = require('request');
-
+require('dotenv').config() 
 const app = express();
 const slack = tinyspeck.instance({
     token: process.env.SLACK_ACCESS_TOKEN
