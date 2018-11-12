@@ -2,7 +2,9 @@
 const tinyspeck = require('tinyspeck');
 const express = require('express');
 const request = require('request');
-require('dotenv').config() 
+require('dotenv').config();
+const dispatcher = require('httpdispatcher');
+const http = require('http');
 
 const app = express();
 
@@ -43,6 +45,35 @@ slack.on('/snorri', function (event) {
 slack.on('*', event => { console.log(event) });
 
 slack.listen(process.env.PORT, process.env.SLACK_ACCESS_TOKEN);
+
+// Display the Add to Slack button
+    dispatcher.onGet("/", function(req, res) {
+      res.writeHead(200, {'Content-Type': 'text/html'});
+      let html = '<h1>Example Onboarding Slack Bot</h1><p>This project demonstrates how to build a Slack bot using Slack\'s Events API.</p><p>To test it out:</p><a id="add-to-slack" href="'+add_to_slack+'"><img alt="Add to Slack" height="40" width="139" src="https://platform.slack-edge.com/img/add_to_slack.png" srcset="https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x" /></a><script src="https://button.glitch.me/button.js" data-style="glitch"></script><div class="glitchButton" style="position:fixed;top:20px;right:20px;"></div>';
+      res.end(html);
+    });     
+    
+    return http.createServer((req, res) => {
+      let data = '';
+      
+      req.on('data', chunk => data += chunk);
+      
+      req.on('end', () => {
+        let message = this.parse(data);
+
+        // notify upon request
+        this.emit(req.url, message); 
+
+        // new subscription challenge
+        if (message.challenge){ console.log("verifying event subscription!"); res.end(message.challenge); return exit(); }
+        
+        // digest the incoming message
+        if (!token || token === message.token) this.digest(message);
+        
+        // close response
+        res.end();
+      });
+    });
 
 app.get('/auth', (req, res) =>{
     res.sendFile(__dirname + '/add_to_slack.html')
