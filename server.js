@@ -2,15 +2,22 @@
 //const tinyspeck = require('tinyspeck');
 const { createEventAdapter } = require('@slack/events-api');
 const slackEvents = createEventAdapter(process.env.SLACK_SIGNING_SECRET);
-const port = process.env.PORT || 3000;
-
 const express = require('express');
 const request = require('request');
 require('dotenv').config() 
-var app = express();
+const app = express();
+const http = require('http');
 //const slack = tinyspeck.instance({
 //    token: process.env.SLACK_ACCESS_TOKEN
 //});
+
+app.use('/slack/events', slackEvents.expressMiddleware());
+
+// Start the express application
+const port = process.env.PORT || 3000;
+http.createServer(app).listen(port, () => {
+  console.log(`server listening on port ${port}`);
+});
 
 const yells = ['mreowww', 'wuoooahh', 'broo?', 'wooah', 'mwow?'];
 
@@ -42,9 +49,9 @@ slackEvents.on('/snorri', function (event) {
   }
 });
 
-slackEvents.on('slash_command', event => { console.log(event) });
+// slackEvents.on('slash_command', event => { console.log(event) });
 
-slackEvents.listen(process.env.PORT, process.env.SLACK_ACCESS_TOKEN);
+// slackEvents.listen(process.env.PORT, process.env.SLACK_ACCESS_TOKEN);
 
 // http.createServer(onRequest_a).listen(9011);
 
