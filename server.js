@@ -3,7 +3,7 @@ const tinyspeck = require('tinyspeck');
 const express = require('express');
 const request = require('request');
 require('dotenv').config() 
-const app = express();
+var app = express();
 const slack = tinyspeck.instance({
     token: process.env.SLACK_ACCESS_TOKEN
 });
@@ -40,7 +40,12 @@ slack.on('/snorri', function (event) {
 
 slack.on('*', event => { console.log(event) });
 
-slack.listen(process.env.PORT, process.env.SLACK_ACCESS_TOKEN)
+slack.listen(process.env.PORT, process.env.SLACK_ACCESS_TOKEN);
+
+// listen for requests :)
+var listener = app.listen(process.env.PORT, function() {
+  console.log('Your app is listening on port ' + listener.address().port);
+});
 
 app.get('/', function(req, res) {
   res.sendFile(__dirname + '/views/index.html');
