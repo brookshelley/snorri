@@ -42,7 +42,7 @@ slack.on('/snorri', function (event) {
 
 slack.on('*', event => { console.log(event) });
 
-slack.listen(process.env.PORT, process.env.SLACK_ACCESS_TOKEN);
+// slack.listen(process.env.PORT, process.env.SLACK_ACCESS_TOKEN);
 
 // http.createServer(onRequest_a).listen(9011);
 
@@ -53,8 +53,8 @@ slack.listen(process.env.PORT, process.env.SLACK_ACCESS_TOKEN);
 
 // listen for requests :)
 // var listener = app.listen(process.env.PORT2, function () {
-  console.log('Your app is listening on port ' + listener.address().port);
-});
+//  console.log('Your app is listening on port ' + listener.address().port);
+// });
 
 app.get('/', function (req, res) {
   res.sendFile(__dirname + '/views/index.html'),
