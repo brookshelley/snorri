@@ -1,22 +1,11 @@
 // server.js
-//const tinyspeck = require('tinyspeck');
-const { createEventAdapter } = require('@slack/events-api');
-const slackEvents = createEventAdapter(process.env.SLACK_SIGNING_SECRET);
+const tinyspeck = require('tinyspeck');
 const express = require('express');
 const request = require('request');
 require('dotenv').config() 
-const app = express();
-const http = require('http');
-//const slack = tinyspeck.instance({
-//    token: process.env.SLACK_ACCESS_TOKEN
-//});
-
-app.use('/slack/events', slackEvents.expressMiddleware());
-
-// Start the express application
-const port = process.env.PORT || 3000;
-http.createServer(app).listen(port, () => {
-  console.log(`server listening on port ${port}`);
+var app = express();
+const slack = tinyspeck.instance({
+    token: process.env.SLACK_ACCESS_TOKEN
 });
 
 const yells = ['mreowww', 'wuoooahh', 'broo?', 'wooah', 'mwow?'];
@@ -25,33 +14,33 @@ const getYells = function () {
     return yells[Math.floor(Math.random() * yells.length)];
 }
 
-slackEvents.on('/snorri', function (event) {
+slack.on('/snorri', function (event) {
   if (event.text == 'food') {  
     const response_url = event.response_url;
-    slackEvents.send(response_url, {
+    slack.send(response_url, {
         response_type: "in_channel",
         text: getYells()
     })
   }
   else if (event.text == 'sleepies') {
     const response_url = event.response_url;
-    slackEvents.send(response_url, {
+    slack.send(response_url, {
         response_type: "in_channel",
         text: '_blinks_'
     })
   }
   else {
     const response_url = event.response_url;
-    slackEvents.send(response_url, {
+    slack.send(response_url, {
         response_type: "in_channel",
         text: '_stares at you_'
     })
   }
 });
 
-// slackEvents.on('slash_command', event => { console.log(event) });
+slack.on('*', event => { console.log(event) });
 
-// slackEvents.listen(process.env.PORT, process.env.SLACK_ACCESS_TOKEN);
+slack.listen(process.env.PORT, process.env.SLACK_ACCESS_TOKEN);
 
 // http.createServer(onRequest_a).listen(9011);
 
@@ -61,12 +50,12 @@ slackEvents.on('/snorri', function (event) {
 //}
 
 // listen for requests :)
-//var listener = app.listen(process.env.PORT, function () {
-//  console.log('Your app is listening on port ' + listener.address().port);
-//});
+var listener = app.listen(process.env.PORT, function () {
+  console.log('Your app is listening on port ' + listener.address().port);
+});
 
 app.get('/', function (req, res) {
-  res.sendFile(__dirname + '/views/index.html');  
+  res.sendFile(__dirname + '/views/index.html');
 });
 
 app.get('/auth', function(req, res) {
