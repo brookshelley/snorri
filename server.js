@@ -1,9 +1,9 @@
 // server.js
 const tinyspeck = require('tinyspeck');
-const express = require('express');
+//const express = require('express');
 const request = require('request');
 require('dotenv').config() 
-var app = express();
+//var app = express();
 const slack = tinyspeck.instance({
     token: process.env.SLACK_ACCESS_TOKEN
 });
@@ -38,39 +38,36 @@ slack.on('/snorri', function (event) {
   }
 });
 
-slack.on('*', event => { console.log(event) });
+slack.on('/snorri', event => { console.log(event) });
 
-slack.listen(process.env.PORT, process.env.SLACK_ACCESS_TOKEN
-             // , function (req, res) {
-    //res.sendFile(__dirname + '/views/index.html');
-//}
-            );
+//slack.listen(process.env.PORT, process.env.SLACK_ACCESS_TOKEN);
+slack.listen('3000');
 
-app.get('/', function (req, res) {
-  res.sendFile(__dirname + '/views/index.html');
-});
+//app.get('/', function (req, res) {
+//  res.sendFile(__dirname + '/views/index.html');
+//});
 
-app.get('/auth', function(req, res) {
-    res.sendFile(__dirname + '/views/add_to_slack.html')
-})
+//app.get('/auth', function(req, res) {
+//    res.sendFile(__dirname + '/views/add_to_slack.html')
+//})
 
-app.get('/auth/redirect', (req, res) =>{
-    var options = {
-        uri: 'https://slack.com/oauth/authorize'
-            +req.query.code+
-            '&client_id='+process.env.CLIENT_ID+
-            '&client_secret='+process.env.CLIENT_SECRET+
-            '&redirect_uri='+process.env.REDIRECT_URI,
-        method: 'GET'
-    }
-    request(options, (error, response, body) => {
-        var JSONresponse = JSON.parse(body)
-        if (!JSONresponse.ok){
-            console.log(JSONresponse)
-            res.send("Error encountered: \n"+JSON.stringify(JSONresponse)).status(200).end()
-        }else{
-            console.log(JSONresponse)
-            res.send("Success!")
-        }
-    })
-}) 
+//app.get('/auth/redirect', (req, res) =>{
+//    var options = {
+//        uri: 'https://slack.com/oauth/authorize'
+//            +req.query.code+
+//            '&client_id='+process.env.CLIENT_ID+
+//            '&client_secret='+process.env.CLIENT_SECRET+
+//            '&redirect_uri='+process.env.REDIRECT_URI,
+//        method: 'GET'
+//    }
+//    request(options, (error, response, body) => {
+//        var JSONresponse = JSON.parse(body)
+//        if (!JSONresponse.ok){
+//            console.log(JSONresponse)
+//            res.send("Error encountered: \n"+JSON.stringify(JSONresponse)).status(200).end()
+//        }else{
+//            console.log(JSONresponse)
+//            res.send("Success!")
+//        }
+//    })
+//}) 
