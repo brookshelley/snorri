@@ -1,7 +1,4 @@
 {
-  "//1": "describes your app and its dependencies",
-  "//2": "https://docs.npmjs.com/files/package.json",
-  "//3": "updating this file will download and update your packages",
   "name": "snorribot",
   "version": "0.0.1",
   "description": "A bot of Snorri.",
@@ -14,8 +11,6 @@
     "tinyspeck": "^1.4.2",
     "request": "^2.88.0",
     "dotenv": "^6.1.0",
-    "httpdispatcher": "^2.1.2",
-    "http": "0.0.0",
     "events": "^3.0.0"
   },
   "engines": {
