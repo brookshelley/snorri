@@ -17,4 +17,4 @@ app.get('/auth/redirect', (req, res) =>{
             res.send("Success!")
         }
     })
-})`  `1111``1  qaQ`QFgqvbcxnvcb 4
+})
