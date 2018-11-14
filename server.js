@@ -1,73 +1,70 @@
-// server.js
-const tinyspeck = require('tinyspeck');
-//const express = require('express');
-const request = require('request');
-require('dotenv').config() 
-//var app = express();
-const slack = tinyspeck.instance({
-    token: process.env.SLACK_ACCESS_TOKEN
+require('dotenv').config();
+
+const express = require('express');
+const apiUrl = 'https://slack.com/api';
+const app = express();
+const bodyParser = require('body-parser');
+
+const rawBodyBuffer = (req, res, buf, encoding) => {
+  if (buf && buf.length) {
+    req.rawBody = buf.toString(encoding || 'utf8');
+  }
+};
+
+app.use(bodyParser.urlencoded({verify: rawBodyBuffer, extended: true }));
+app.use(bodyParser.json({ verify: rawBodyBuffer }));
+
+app.get('/', (req, res) => {
+  res.send('<h1>SnorriBot</h1><p>Snorri is hungry? Find out what he wants.</p><a href="https://slack.com/oauth/authorize?client_id=121504987699.463670568307&scope=commands,bot,incoming-webhook"><img alt="Add to Slack" height="40" width="139" src="https://platform.slack-edge.com/img/add_to_slack.png" srcset="https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x" /></a>');
 });
 
-const yells = ['mreowww', 'wuoooahh', 'broo?', 'wooah', 'mwow?'];
+const yells = ['mreowww', 'wuoooahh', 'broo?', 'wooah', 'mwow?', 'wonnnn', 'brrowww', 'moww'];
 
 const getYells = function () {
     return yells[Math.floor(Math.random() * yells.length)];
 }
 
-slack.on('/snorri', function (event) {
-  if (event.text == 'food') {  
-    const response_url = event.response_url;
-    slack.send(response_url, {
-        response_type: "in_channel",
-        text: getYells()
-    })
+app.post('/snorri', (req, res) => {
+  console.log(req.body);
+  if (req.body.text == 'food') {  
+    const response = {text: getYells(), response_type: "in_channel"};
+    res.send(response)
   }
-  else if (event.text == 'sleepies') {
-    const response_url = event.response_url;
-    slack.send(response_url, {
-        response_type: "in_channel",
-        text: '_blinks_'
-    })
+  else if (req.body.text == 'sleepies') {
+    const response = {text: '_blinks_', response_type: "in_channel"};
+    res.send(response)
   }
   else {
-    const response_url = event.response_url;
-    slack.send(response_url, {
-        response_type: "in_channel",
-        text: '_stares at you_'
-    })
+    const response = {text: '_stares at you_', response_type: "in_channel"};
+    res.send(response)
   }
 });
 
-slack.on('/snorri', event => { console.log(event) });
+const server = app.listen(process.env.PORT || 5000, () => {
+  console.log('Express server listening on port %d in %s mode', server.address().port, app.settings.env);
+});
 
-//slack.listen(process.env.PORT, process.env.SLACK_ACCESS_TOKEN);
-slack.listen('3000');
+app.get('/auth', function(req, res) {
+    res.sendFile(__dirname + '/views/add_to_slack.html')
+})
 
-//app.get('/', function (req, res) {
-//  res.sendFile(__dirname + '/views/index.html');
-//});
-
-//app.get('/auth', function(req, res) {
-//    res.sendFile(__dirname + '/views/add_to_slack.html')
-//})
-
-//app.get('/auth/redirect', (req, res) =>{
-//    var options = {
-//        uri: 'https://slack.com/oauth/authorize'
-//            +req.query.code+
-//            '&client_id='+process.env.CLIENT_ID+
-//            '&client_secret='+process.env.CLIENT_SECRET+
-//            '&redirect_uri='+process.env.REDIRECT_URI,
-//        method: 'GET'
-//    }
-//    request(options, (error, response, body) => {
-//        var JSONresponse = JSON.parse(body)
-//        if (!JSONresponse.ok){
-//            console.log(JSONresponse)
-//            res.send("Error encountered: \n"+JSON.stringify(JSONresponse)).status(200).end()
-//        }else{
-//            console.log(JSONresponse)
-//            res.send("Success!")
-//        }
-//    })
-//}) 
+app.get('/auth/redirect', (req, res) =>{
+    var options = {
+        uri: 'https://slack.com/oauth/authorize'
+            +req.query.code+
+            '&client_id='+process.env.CLIENT_ID+
+            '&client_secret='+process.env.CLIENT_SECRET+
+            '&redirect_uri='+process.env.REDIRECT_URI,
+        method: 'GET'
+    }
+    req(options, (error, response, body) => {
+        var JSONresponse = JSON.parse(body)
+        if (!JSONresponse.ok){
+            console.log(JSONresponse)
+            res.send("Error encountered: \n"+JSON.stringify(JSONresponse)).status(200).end()
+        }else{
+            console.log(JSONresponse)
+            res.send("Success!")
+        }
+    })
+}) 
