@@ -1,8 +1,7 @@
 require('dotenv').config();
-
-const express = require('express');
+var express = require('express');
 const apiUrl = 'https://slack.com/api';
-const app = express();
+var app = express();
 const bodyParser = require('body-parser');
 var request = require('request')
 
