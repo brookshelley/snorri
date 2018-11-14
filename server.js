@@ -3,7 +3,9 @@ var express = require('express');
 const apiUrl = 'https://slack.com/api';
 var app = express();
 const bodyParser = require('body-parser');
-var request = require('request')
+var request = require('request');
+var clientId = process.env.CLIENT_ID;
+var clientSecret = process.env.CLIENT_SECRET;
 
 const rawBodyBuffer = (req, res, buf, encoding) => {
   if (buf && buf.length) {
@@ -67,4 +69,22 @@ app.get('/auth/redirect', (req, res) =>{
             res.send("Success!")
         }
     })
+})
+
+app.get('/oauth', function(req, res) {
+    // When a user authorizes an app, a code query parameter is passed on the oAuth endpoint. If that code is not there, we respond with an error message
+    if (!req.query.code) {
+        res.status(500);
+        res.send({"Error": "Looks like we're not getting code."});
+        console.log("Looks like we're not getting code.");
+    } else {
+        // If it's there...
+
+        // We'll do a GET call to Slack's `oauth.access` endpoint, passing our app's client ID, client secret, and the code we just got as query parameters.
+        request({
+            url: 'https://slack.com/api/oauth.access', //URL to hit
+            qs: {code: req.query.code, client_id: clientId, client_secret: clientSecret}, //Query string data
+            method: 'GET', //Specify the method
+        })
+    }
 })
