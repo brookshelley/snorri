@@ -4,6 +4,7 @@ const express = require('express');
 const apiUrl = 'https://slack.com/api';
 const app = express();
 const bodyParser = require('body-parser');
+var request = require('request')
 
 const rawBodyBuffer = (req, res, buf, encoding) => {
   if (buf && buf.length) {
@@ -44,7 +45,7 @@ const server = app.listen(process.env.PORT || 5000, () => {
   console.log('Express server listening on port %d in %s mode', server.address().port, app.settings.env);
 });
 
-app.get('/auth', function(req, res) {
+app.get('/auth', (req, res) =>{
     res.sendFile(__dirname + '/views/add_to_slack.html')
 })
 
