@@ -17,7 +17,8 @@ app.use(bodyParser.urlencoded({verify: rawBodyBuffer, extended: true }));
 app.use(bodyParser.json({ verify: rawBodyBuffer }));
 
 app.get('/', (req, res) => {
-  res.send('<h1>SnorriBot</h1><p>Snorri is hungry? Find out what he wants.</p><a href="https://slack.com/oauth/authorize?client_id=121504987699.463670568307&scope=commands,bot,incoming-webhook"><img alt="Add to Slack" height="40" width="139" src="https://platform.slack-edge.com/img/add_to_slack.png" srcset="https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x" /></a>');
+//  res.send('<h1>SnorriBot</h1><p>Snorri is hungry? Find out what he wants.</p><a href="https://slack.com/oauth/authorize?client_id=121504987699.463670568307&scope=commands,bot,incoming-webhook"><img alt="Add to Slack" height="40" width="139" src="https://platform.slack-edge.com/img/add_to_slack.png" srcset="https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x" /></a>');
+    res.sendFile(__dirname + '/views/index.html')
 });
 
 const yells = ['mreowww', 'wuoooahh', 'broo?', 'wooah', 'mwow?', 'wonnnn', 'brrowww', 'moww'];
