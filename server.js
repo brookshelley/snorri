@@ -55,6 +55,7 @@ app.post('/snorri', (req, res) => {
         }
       ]
     }
+    res.send(response)
   }
   else {
     const response = {text: '_stares at you_', response_type: "in_channel"};
