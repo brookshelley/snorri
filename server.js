@@ -37,6 +37,21 @@ app.post('/snorri', (req, res) => {
     const response = {text: '_blinks_', response_type: "in_channel"};
     res.send(response)
   }
+  else if (req.body.text == 'blocks') {
+    const response = {
+      blocks: '[
+                 "type": "image",
+        "title": {
+          "type": "plaintext",
+          "text": "Please enjoy this photo of a kitten"
+          },
+        "block_id": "image4",
+        "image_url": "http://placekitten.com/500/500",
+        "alt_text": "An incredibly cute kitten."
+        }
+      ]
+    }
+  }
   else {
     const response = {text: '_stares at you_', response_type: "in_channel"};
     res.send(response)
