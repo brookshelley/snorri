@@ -39,8 +39,9 @@ app.post('/snorri', (req, res) => {
   }
   else if (req.body.text == 'blocks') {
     const response = {
-      blocks: '[
-                 "type": "image",
+      blocks: [
+        {
+        "type": "image",
         "title": {
           "type": "plaintext",
           "text": "Please enjoy this photo of a kitten"
