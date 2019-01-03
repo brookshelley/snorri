@@ -38,7 +38,10 @@ app.post('/snorri', (req, res) => {
     res.send(response)
   }
   else if (req.body.text == 'blocks') {
+    var channel = req.body.channel_id;
+    console.log(channel);
     const response = {
+      channel: channel,
       blocks: [
         {
         "type": "image",
