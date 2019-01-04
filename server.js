@@ -81,7 +81,7 @@ app.post('/snorri', (req, res) => {
            "value": "click_me_1",
 				   "action_id": "button1"
            },
-           {
+           { 
              "type": "button",
              "text": {
                "type": "plaintext",
