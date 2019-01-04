@@ -52,11 +52,35 @@ app.post('/snorri', (req, res) => {
         "block_id": "image4",
         "image_url": "http://placekitten.com/500/500",
         "alt_text": "An incredibly cute kitten."
+        },
+        {
+		  "type": "section",
+		  "text": {
+			  "type": "mrkdwn",
+			  "text": "*Check out* _this text_. It's hella fresh"
+		      }
         }
       ]
     }
     res.send(response)
   }
+  else if (req.bod.text == 'choices') {
+   const response = {
+     blocks: [
+       {
+         "type": "actions",
+         "elements": [
+           {
+             "type": "buttons",
+             "text": {
+               "type": "plaintext",
+               "text": "Meow"
+             },
+             
+           }
+        "value": "click_me_123",
+				"action_id": "button147115167"
+         
   else {
     const response = {text: '_stares at you_', response_type: "in_channel"};
     res.send(response)
