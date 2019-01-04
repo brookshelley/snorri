@@ -64,23 +64,38 @@ app.post('/snorri', (req, res) => {
     }
     res.send(response)
   }
-  else if (req.bod.text == 'choices') {
-   const response = {
-     blocks: [
+  else if (req.body.text == 'choices') {
+    var channel = req.body.channel_id;
+    const response = {
+      channel: channel,
+      blocks: [
        {
          "type": "actions",
          "elements": [
            {
-             "type": "buttons",
+             "type": "button",
              "text": {
                "type": "plaintext",
                "text": "Meow"
              },
-             
+           "value": "click_me_1",
+				   "action_id": "button1"
+           },
+           {
+             "type": "button",
+             "text": {
+               "type": "plaintext",
+               "text": "Moooo"
+             },
+           "value": "click_me_2",
+				   "action_id": "button2"
            }
-        "value": "click_me_123",
-				"action_id": "button147115167"
-         
+          ]
+        }
+      ]
+     }
+     res.send (response)
+   }
   else {
     const response = {text: '_stares at you_', response_type: "in_channel"};
     res.send(response)
