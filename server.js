@@ -26,6 +26,19 @@ const getYells = function () {
     return yells[Math.floor(Math.random() * yells.length)];
 }
 
+const laterGator = function () {
+    return app.post('https://hooks.slack.com/services/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', (req, res) => {
+     var channel = req.body.channel_id;
+     const response = {
+      channel: channel,
+      text: 'hello from the past',
+      response_type: "in_channel",
+      post_at: "1546890700"
+    }
+}
+);
+}
+
 app.post('/snorri', (req, res) => {
   console.log(req.body);
   if (req.body.text == 'food') {  
@@ -99,19 +112,16 @@ app.post('/snorri', (req, res) => {
     var channel = req.body.channel_id;
     const response = {
       channel: channel,
-      text: 'hello from the past',
-      response_type: "in_channel",
-      post_at: "1546889400"
+      text: 'your message is scheduled',
     }
-    res.send(response)
+    res.send(response),
+    laterGator()
   }
   else {
     const response = {text: '_stares at you_', response_type: "in_channel"};
     res.send(response)
   }
 });
-
-app.post
 
 const server = app.listen(process.env.PORT || 5000, () => {
   console.log('Express server listening on port %d in %s mode', server.address().port, app.settings.env);
