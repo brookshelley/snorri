@@ -37,7 +37,7 @@ const laterGator = function (req, res) {
       token: req.body.token,
       channel: req.body.channel_id,
       text: 'hello from the past',
-      post_at: "1546896876",
+      post_at: "1546896976",
     };
   console.log('great job')
   url.send(response)
@@ -50,7 +50,7 @@ const laterGator2 = async(channel, text, req) => {
     token: process.env.BOT_TOKEN,
     channel: 'DE1CEDCSK',
     text: 'hello from the past',
-    post_at: "1546898420",
+    post_at: "1546898820",
   };
   
   const result = await axios.post('https://slack.com/api/chat.scheduleMessage', qs.stringify(args));
