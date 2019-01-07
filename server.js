@@ -6,6 +6,8 @@ const bodyParser = require('body-parser');
 var request = require('request');
 var clientId = process.env.CLIENT_ID;
 var clientSecret = process.env.CLIENT_SECRET;
+const axios = require('axios'); 
+const qs = require('querystring');
 //var token = process.env.BOT_TOKEN;
 
 const rawBodyBuffer = (req, res, buf, encoding) => {
@@ -35,7 +37,6 @@ const laterGator = function (req, res) {
       token: req.body.token,
       channel: req.body.channel_id,
       text: 'hello from the past',
-      response_type: "in_channel",
       post_at: "1546896876",
     };
   console.log('great job')
@@ -43,6 +44,23 @@ const laterGator = function (req, res) {
 }
 );
 }
+
+const laterGator2 = async(channel, text, req) => { 
+  const args = {
+    token: process.env.BOT_TOKEN,
+    channel: 'DE1CEDCSK',
+    text: 'hello from the past',
+    post_at: "1546898420",
+  };
+  
+  const result = await axios.post('https://slack.com/api/chat.scheduleMessage', qs.stringify(args));
+  
+  try {
+    console.log(result.data);
+  } catch(e) {
+    console.log(e);
+  }
+};
 
 app.post('/snorri', (req, res) => {
   console.log(req.body);
@@ -120,7 +138,7 @@ app.post('/snorri', (req, res) => {
       text: 'your message is scheduled',
     }
     res.send(response),
-    laterGator(req, res)
+    laterGator2(req)
   }
   else {
     const response = {text: '_stares at you_', response_type: "in_channel"};

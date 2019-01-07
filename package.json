@@ -13,7 +13,8 @@
     "dotenv": "^6.1.0",
     "events": "^3.0.0",
     "@slack/events-api": "^2.0.0",
-    "httpdispatcher": "^1.0.0"
+    "httpdispatcher": "^1.0.0",
+    "axios": "^0.16.1"
   },
   "engines": {
     "node": "8.x"

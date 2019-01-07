@@ -1,5 +1,6 @@
 dependencies:
   '@slack/events-api': 2.1.1
+  axios: 0.16.2
   dotenv: 6.1.0
   events: 3.0.0
   express: 4.16.3
@@ -80,6 +81,13 @@ packages:
     dev: false
     resolution:
       integrity: sha1-Pmer/kMzvJ0tX+b70TtGlOr8jfg=
+  /axios/0.16.2:
+    dependencies:
+      follow-redirects: 1.6.1
+      is-buffer: 1.1.6
+    dev: false
+    resolution:
+      integrity: sha1-uk+S8XFn37q0CYN4VFS5rBScPG0=
   /bcrypt-pbkdf/1.0.2:
     dependencies:
       tweetnacl: 0.14.5
@@ -205,6 +213,12 @@ packages:
     dev: false
     resolution:
       integrity: sha512-bC7ElrdJaJnPbAP+1EotYvqZsb3ecl5wi6Bfi6BJTUcNowp6cvspg0jXznRTKDjm/E7AdgFBVeAPVMNcKGsHMA==
+  /debug/3.1.0:
+    dependencies:
+      ms: 2.0.0
+    dev: false
+    resolution:
+      integrity: sha512-OX8XqP7/1a9cqkxYw2yXss15f26NKWBpDXQd0/uK/KPqdQhxbPa994hnzjcE2VqQpDslf55723cKPUOGSmMY3g==
   /decamelize/1.2.0:
     dev: false
     engines:
@@ -407,6 +421,14 @@ packages:
     dev: false
     resolution:
       integrity: sha1-NLkLqyqRGqNHVx2pDyK9NuzYqRk=
+  /follow-redirects/1.6.1:
+    dependencies:
+      debug: 3.1.0
+    dev: false
+    engines:
+      node: '>=4.0'
+    resolution:
+      integrity: sha512-t2JCjbzxQpWvbhts3l6SH1DKzSrx8a+SsaVf4h6bG4kOXUuPYS/kg2Lr4gQSb7eemaHqJkOThF1BGyjlUkO1GQ==
   /forever-agent/0.6.1:
     dev: false
     resolution:
@@ -546,6 +568,10 @@ packages:
     dev: false
     resolution:
       integrity: sha1-d8mYQFJ6qOyxqLppe4BkWnqSap0=
+  /is-buffer/1.1.6:
+    dev: false
+    resolution:
+      integrity: sha512-NcdALwpXkTm5Zvvbk7owOUSvVvBKDgKP5/ewfXEznmQFfs4ZRmanOeKBTjRVjka3QFoN6XJ+9F3USqfHqTaU5w==
   /is-builtin-module/1.0.0:
     dependencies:
       builtin-modules: 1.1.1
@@ -1213,6 +1239,7 @@ shrinkwrapMinorVersion: 9
 shrinkwrapVersion: 3
 specifiers:
   '@slack/events-api': ^2.0.0
+  axios: ^0.16.1
   dotenv: ^6.1.0
   events: ^3.0.0
   express: ^4.16.3
