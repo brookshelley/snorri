@@ -26,15 +26,16 @@ const getYells = function () {
     return yells[Math.floor(Math.random() * yells.length)];
 }
 
-const laterGator = function () {
-    console.log('message scheduled')
-    app.post('https://hooks.slack.com/services/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', (req, res) => {
+const laterGator = function (req) {
+    console.log('message scheduled');
+    console.log(req.body.channel_id);
+    app.post('https://slack.com/api/chat.scheduleMessage', (req, res) => {
      var channel = req.body.channel_id;
      const response = {
       channel: channel,
       text: 'hello from the past',
       response_type: "in_channel",
-      post_at: "1546891000"
+      post_at: "1546895277"
     }
   res.send(response)
 }
@@ -117,7 +118,7 @@ app.post('/snorri', (req, res) => {
       text: 'your message is scheduled',
     }
     res.send(response),
-    laterGator()
+    laterGator(req)
   }
   else {
     const response = {text: '_stares at you_', response_type: "in_channel"};
