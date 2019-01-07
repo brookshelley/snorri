@@ -17,7 +17,6 @@ app.use(bodyParser.urlencoded({verify: rawBodyBuffer, extended: true }));
 app.use(bodyParser.json({ verify: rawBodyBuffer }));
 
 app.get('/', (req, res) => {
-//  res.send('<h1>SnorriBot</h1><p>Snorri is hungry? Find out what he wants.</p><a href="https://slack.com/oauth/authorize?client_id=121504987699.463670568307&scope=commands,bot,incoming-webhook"><img alt="Add to Slack" height="40" width="139" src="https://platform.slack-edge.com/img/add_to_slack.png" srcset="https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x" /></a>');
     res.sendFile(__dirname + '/views/index.html')
 });
 
@@ -96,6 +95,16 @@ app.post('/snorri', (req, res) => {
      }
      res.send (response)
    }
+  else if (req.body.text == 'later') {
+    var channel = req.body.channel_id;
+    const response = {
+      channel: channel,
+      text: 'hello from the past',
+      response_type: "in_channel",
+      post_at: "1546889400"
+    }
+    res.send(response)
+  }
   else {
     const response = {text: '_stares at you_', response_type: "in_channel"};
     res.send(response)
