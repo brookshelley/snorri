@@ -27,14 +27,16 @@ const getYells = function () {
 }
 
 const laterGator = function () {
-    return app.post('https://hooks.slack.com/services/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', (req, res) => {
+    console.log('message scheduled')
+    app.post('https://hooks.slack.com/services/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', (req, res) => {
      var channel = req.body.channel_id;
      const response = {
       channel: channel,
       text: 'hello from the past',
       response_type: "in_channel",
-      post_at: "1546890700"
+      post_at: "1546891000"
     }
+  res.send(response)
 }
 );
 }
