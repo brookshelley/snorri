@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 var request = require('request');
 var clientId = process.env.CLIENT_ID;
 var clientSecret = process.env.CLIENT_SECRET;
+var token = process.env.BOT_TOKEN;
 
 const rawBodyBuffer = (req, res, buf, encoding) => {
   if (buf && buf.length) {
@@ -32,6 +33,7 @@ const laterGator = function (req) {
     app.post('https://slack.com/api/chat.scheduleMessage', (req, res) => {
      var channel = req.body.channel_id;
      const response = {
+      token: token,
       channel: channel,
       text: 'hello from the past',
       response_type: "in_channel",
