@@ -29,23 +29,7 @@ const getYells = function () {
     return yells[Math.floor(Math.random() * yells.length)];
 }
 
-const laterGator = function (req, res) {
-    //console.log(req.body.token);
-   var url = 'https://slack.com/api/chat.scheduleMessage'
-    app.post('https://slack.com/api/chat.scheduleMessage', (req, res) => {
-     const response = {
-      token: req.body.token,
-      channel: req.body.channel_id,
-      text: 'hello from the past',
-      post_at: "1546896976",
-    };
-  console.log('great job')
-  url.send(response)
-}
-);
-}
-
-const laterGator2 = async(channel, text, req) => { 
+const laterGator2 = async(channel, text) => { 
   const args = {
     token: process.env.BOT_TOKEN,
     channel: 'DE1CEDCSK',
