@@ -88,7 +88,6 @@ app.post('/snorri', (req, res) => {
     var responseURL = req.body.response_url;
     const response = {
       channel: channel,
-      response_url: responseURL,
       blocks: [
        {
          "type": "actions",
@@ -96,7 +95,7 @@ app.post('/snorri', (req, res) => {
            {
              "type": "button",
              "text": {
-               "type": "plaintext",
+               "type": "plain_text",
                "text": "Meow"
              },
            "value": "click_me_1",
@@ -105,7 +104,7 @@ app.post('/snorri', (req, res) => {
            { 
              "type": "button",
              "text": {
-               "type": "plaintext",
+               "type": "plain_text",
                "text": "Moooo"
              },
            "value": "click_me_2",
@@ -115,8 +114,7 @@ app.post('/snorri', (req, res) => {
         }
       ]
      }
-    
-     sendMessageToSlackResponseURL (response, responseURL)
+     res.send (response);
    }
   else if (req.body.text == 'later') {
     var channel = req.body.channel_id;
@@ -149,11 +147,13 @@ function sendMessageToSlackResponseURL(responseURL, JSONmessage){
     })
 }
 
-app.post('/slack/actions', (req, res) =>{
+app.post('/interactive', (req, res) =>{
     res.status(200).end() // best practice to respond with 200 status
+    console.log (req.body.payload);
     var actionJSONPayload = JSON.parse(req.body.payload) // parse URL-encoded payload JSON string
+    console.log (actionJSONPayload);
     var message = {
-        "text": actionJSONPayload.user.name+" clicked: "+actionJSONPayload.actions[0].name,
+        "text": actionJSONPayload.user.username + " did it",
         "replace_original": true
     }
     sendMessageToSlackResponseURL(actionJSONPayload.response_url, message)
