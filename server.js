@@ -85,8 +85,10 @@ app.post('/snorri', (req, res) => {
   }
   else if (req.body.text == 'choices') {
     var channel = req.body.channel_id;
+    var responseURL = req.body.response_url;
     const response = {
       channel: channel,
+      response_url: responseURL,
       blocks: [
        {
          "type": "actions",
@@ -113,7 +115,8 @@ app.post('/snorri', (req, res) => {
         }
       ]
      }
-     res.send (response)
+    
+     sendMessageToSlackResponseURL (response, responseURL)
    }
   else if (req.body.text == 'later') {
     var channel = req.body.channel_id;
@@ -129,6 +132,32 @@ app.post('/snorri', (req, res) => {
     res.send(response)
   }
 });
+
+function sendMessageToSlackResponseURL(responseURL, JSONmessage){
+    var postOptions = {
+        uri: responseURL,
+        method: 'POST',
+        headers: {
+            'Content-type': 'application/json'
+        },
+        json: JSONmessage
+    }
+    request(postOptions, (error, response, body) => {
+        if (error){
+            // handle errors as you see fit
+        }
+    })
+}
+
+app.post('/slack/actions', (req, res) =>{
+    res.status(200).end() // best practice to respond with 200 status
+    var actionJSONPayload = JSON.parse(req.body.payload) // parse URL-encoded payload JSON string
+    var message = {
+        "text": actionJSONPayload.user.name+" clicked: "+actionJSONPayload.actions[0].name,
+        "replace_original": true
+    }
+    sendMessageToSlackResponseURL(actionJSONPayload.response_url, message)
+})
 
 const server = app.listen(process.env.PORT || 5000, () => {
   console.log('Express server listening on port %d in %s mode', server.address().port, app.settings.env);
