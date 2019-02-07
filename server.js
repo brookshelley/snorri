@@ -9,6 +9,10 @@ var clientSecret = process.env.CLIENT_SECRET;
 const axios = require('axios'); 
 const qs = require('querystring');
 //var token = process.env.BOT_TOKEN;
+const SlackClient = require('@slack/client').WebClient;
+const slackEventsApi = require('@slack/events-api');
+const slackEvents = slackEventsApi.createEventAdapter(process.env.SLACK_SIGNING_SECRET);
+const slack = new SlackClient(process.env.SLACK_ACCESS_TOKEN);
 
 const rawBodyBuffer = (req, res, buf, encoding) => {
   if (buf && buf.length) {
@@ -21,6 +25,37 @@ app.use(bodyParser.json({ verify: rawBodyBuffer }));
 
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/views/index.html')
+});
+
+slackEvents.on('link_shared', (event) => {
+  console.log(event);
+  slack.chat.unfurl({ 
+    token: process.env.SLACK_USER_TOKEN, 
+    channel: event.channel, 
+    ts: event.message_ts, 
+    user_auth_required: false,
+    unfurls: {
+      "https://www.brookshelley.com": {
+          blocks: [
+            {
+              "type": "image",
+              "title": {
+                "type": "plain_text",
+                "text": "Please enjoy this photo of a kitten"
+            },
+              "block_id": "image4",
+              "image_url": "http://placekitten.com/500/500",
+              "alt_text": "An incredibly cute kitten."
+            }  
+        ]  
+      }
+    } 
+  })
+    .then((res) => {
+    console.log('Unfurled: ', res.ts);
+    //console.log(res);
+  })
+  .catch(console.error);
 });
 
 const yells = ['mreowww', 'wuoooahh', 'broo?', 'wooah', 'mwow?', 'wonnnn', 'brrowww', 'moww'];
