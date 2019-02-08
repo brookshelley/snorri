@@ -13,6 +13,7 @@ const SlackClient = require('@slack/client').WebClient;
 const slackEventsApi = require('@slack/events-api');
 const slackEvents = slackEventsApi.createEventAdapter(process.env.SLACK_SIGNING_SECRET);
 const slack = new SlackClient(process.env.SLACK_ACCESS_TOKEN);
+app.use('/slack/events', slackEvents.expressMiddleware());
 
 const rawBodyBuffer = (req, res, buf, encoding) => {
   if (buf && buf.length) {
@@ -36,18 +37,19 @@ slackEvents.on('link_shared', (event) => {
     user_auth_required: false,
     unfurls: {
       "https://www.brookshelley.com": {
-          blocks: [
-            {
-              "type": "image",
-              "title": {
-                "type": "plain_text",
-                "text": "Please enjoy this photo of a kitten"
-            },
-              "block_id": "image4",
-              "image_url": "http://placekitten.com/500/500",
-              "alt_text": "An incredibly cute kitten."
-            }  
-        ]  
+          
+          //blocks: [
+            //{
+              //"type": "image",
+              //"title": {
+                //"type": "plain_text",
+                //"text": "Please enjoy this photo of a kitten"
+            //},
+              //"block_id": "image4",
+             // "image_url": "http://placekitten.com/500/500",
+              //"alt_text": "An incredibly cute kitten."
+            //}  
+        //]  
       }
     } 
   })
