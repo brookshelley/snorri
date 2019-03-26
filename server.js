@@ -161,10 +161,19 @@ app.post('/snorri', (req, res) => {
     var channel = req.body.channel_id;
     const response = {
       channel: channel,
-      text: 'your message is scheduled',
+      text: 'your message is scheduled'
     }
     res.send(response),
     laterGator2(req)
+  }
+    else if (req.body.text == 'me') {
+      var channel = req.body.user_id;
+      console.log (req.body.user_id);
+      token: process.env.BOT_TOKEN;
+      const response = {
+      text: 'i love poop', as_user: true, channel: 'D3KKEDG85', token: token
+    };
+    res.send(response)
   }
   else {
     const response = {text: '_stares at you_', response_type: "in_channel"};
