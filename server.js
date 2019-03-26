@@ -72,10 +72,10 @@ const getYells = function () {
 
 const laterGator2 = async(channel, text) => { 
   const args = {
-    token: process.env.SLACK_USER_TOKEN,
+    token: process.env.BOT_TOKEN,
     channel: 'DE1CEDCSK',
     text: 'hello from the past',
-    post_at: "1553642254",
+    post_at: "1546898820",
   };
   
   const result = await axios.post('https://slack.com/api/chat.scheduleMessage', qs.stringify(args));
