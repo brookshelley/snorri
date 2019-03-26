@@ -72,10 +72,10 @@ const getYells = function () {
 
 const laterGator2 = async(channel, text) => { 
   const args = {
-    token: process.env.BOT_TOKEN,
+    token: process.env.SLACK_USER_TOKEN,
     channel: 'DE1CEDCSK',
     text: 'hello from the past',
-    post_at: "1546898820",
+    post_at: "1553642254",
   };
   
   const result = await axios.post('https://slack.com/api/chat.scheduleMessage', qs.stringify(args));
@@ -168,10 +168,9 @@ app.post('/snorri', (req, res) => {
   }
     else if (req.body.text == 'me') {
       var channel = req.body.user_id;
-      console.log (req.body.user_id);
-      token: process.env.BOT_TOKEN;
+      console.log (req.body.user_id)
       const response = {
-      text: 'i love poop', as_user: true, channel: 'D3KKEDG85', token: token
+      text: 'i love poop', as_user: true, channel: 'U3JSADA8Z'
     };
     res.send(response)
   }
