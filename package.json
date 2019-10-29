@@ -14,7 +14,7 @@
     "events": "^3.0.0",
     "@slack/events-api": "^2.0.0",
     "httpdispatcher": "^1.0.0",
-    "axios": "^0.16.1",
+    "axios": "^0.19.0",
     "@slack/client": "^4.8.0"
   },
   "engines": {
